@@ -40,24 +40,24 @@ describe('JSON reporter', function () {
       assert.throws(jsonReporter.report);
     });
 
-    it('report status should be false(zero code)', function () {
+    it('report status should be zero', function () {
       options.report_path = './zait_report.json';
 
       const jsonReporter = new JsonReporter(metrics, options, 'test');
 
       jsonReporter.report();
 
-      assert.isFalse(jsonReporter.reportStatus);
+      assert.strictEqual(jsonReporter.reportStatusCode, 0);
     });
 
-    it('report status should be true(non zero code)', function () {
-      options.report_path = '/zait_doesn_is_not_allowed_here';
+    it('report status code should be 1(non zero code)', function () {
+      options.report_path = '/zait_is_not_allowed_here';
 
       const jsonReporter = new JsonReporter(metrics, options, 'test');
 
       jsonReporter.report();
 
-      assert.isTrue(jsonReporter.reportStatus);
+      assert.strictEqual(jsonReporter.reportStatusCode, 1);
     });
   });
 });

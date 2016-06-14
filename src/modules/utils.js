@@ -1,5 +1,5 @@
 /**@module utlis*/
-import chalk from 'chalk';
+import chalk from 'phantomjs-chalk';
 
 /**
  * Transform metrics to array table
@@ -7,7 +7,7 @@ import chalk from 'chalk';
  * @param results Metrics to transform
  * @returns {Array} Array table
  */
-export function metricsToTable(results) {
+export function metricsToArrayTable(results) {
   const header = Object.keys(results[0]);
   let table = [];
 
@@ -35,8 +35,10 @@ export function metricsToTable(results) {
         }
       }
 
-      table.push(column);
     }
+
+
+    table.push(column);
   });
 
   return table;

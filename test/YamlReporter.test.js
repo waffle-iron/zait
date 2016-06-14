@@ -40,24 +40,24 @@ describe('YAML Reporter', function () {
       assert.throws(yamlReporter.report)
     });
 
-    it('report status should be false(zero code)', function () {
+    it('report status code should be zero', function () {
       options.report_path = './zait_report.yml';
 
       const yamlReporter = new YamlReporter(metrics, options, 'test');
 
       yamlReporter.report();
 
-      assert.isFalse(yamlReporter.reportStatus);
+      assert.strictEqual(yamlReporter.reportStatusCode, 0);
     });
 
-    it('report status should be true(non zero code)', function () {
+    it('report status code should be non zero', function () {
       options.report_path = '/zait_cant_report_here';
 
       const yamlReporter = new YamlReporter(metrics, options, 'test');
       
       yamlReporter.report();
 
-      assert.isTrue(yamlReporter.reportStatus);
+      assert.strictEqual(yamlReporter.reportStatusCode, 1);
     });
   })
 });

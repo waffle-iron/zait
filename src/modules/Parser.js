@@ -48,9 +48,9 @@ class Parser {
    *
    * @type {Object}
    */
-  get report() {
-    return this.parsedConfig;
-  }
+  //get report() {
+  //  return this.parsedConfig;
+  //}
 }
 
 export default Parser;

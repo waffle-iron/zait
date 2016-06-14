@@ -33,12 +33,12 @@ class Reporter {
    * @returns {String}
    */
   get reportLog() {
-    switch (this.reportStatus) {
+    switch (this.reportStatusCode) {
       case undefined:
         return 'Report status wasn\'t changed or it wasn\'t run. Can not figure out report status.';
-      case false:
+      case 0:
         return this._reportSuccessMsg;
-      case true:
+      case 1:
         return this._reportFailMsg;
     }
   }
