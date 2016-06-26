@@ -29,6 +29,9 @@ class TimeReceiver {
      * @inner
      */
     const timeoutHandler = () => {
+      endTime = new Date().getTime();
+
+      metricsObjRef.loadTime = endTime - startTime;
       metricsObjRef.status = 'timeout';
 
       this.casper.removeListener('timeout', timeoutHandler);
@@ -56,7 +59,11 @@ class TimeReceiver {
       endTime = new Date().getTime();
 
       metricsObjRef.loadTime = endTime - startTime;
-      metricsObjRef.status = resource.status;
+      if (resource.status !== null) {
+        metricsObjRef.status = resource.status;
+      } else {
+        metricsObjRef.status = 'load error';
+      }
 
       this.casper.removeListener('timeout', timeoutHandler);
       this.casper.removeListener('page.resource.received', receiveHandler);
