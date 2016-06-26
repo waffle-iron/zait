@@ -1,4 +1,5 @@
 import chalk from 'phantomjs-chalk';
+import stripAnsi from 'strip-ansi';
 import mdTable from 'markdown-table';
 
 /**@namespace*/
@@ -46,7 +47,12 @@ export const message = {
    * @param {Array} table Table array
    * @param {Object} config Table configuration
    */
-  table(table, config = { align: 'c' }) {
+  table(table, config = {
+    align: 'c',
+    stringLength(str) {
+      return stripAnsi(str).length;
+    }
+  }) {
     this.print(mdTable(table, config));
   }
 };

@@ -1,7 +1,7 @@
 import {Casper} from 'casper';
 import fs from 'fs';
 
-import utils from './modules/utils';
+import {metricsToArrayTable} from './modules/utils';
 import {message} from './modules/cli';
 
 import Parser from 'modules/Parser';
@@ -55,6 +55,8 @@ casper.start().eachThen(commands, function (res) {
 }).run();
 
 casper.then(function () {
+  message.table(metricsToArrayTable(metrics));
+  
   //TODO temp! for testing
   const reporterName = 'yaml';
 

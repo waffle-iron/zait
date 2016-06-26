@@ -31,6 +31,7 @@
     "phantomjs-chalk": "^1.1.6",
     "phantomjs-prebuilt": "^2.1.7",
     "sinon": "^1.17.4",
+    "strip-ansi": "^3.0.1",
     "typeof": "^1.0.0"
   },
   "devDependencies": {
