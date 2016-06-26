@@ -34,6 +34,10 @@ describe('Utils',  function () {
     it('the second row of metrics should contains red status message', function () {
       assert.notStrictEqual(metricsToArrayTable(metrics)[2][3].indexOf(chalk.styles.red.open), -1);
     });
+
+    it('should returns non colorized row when raw argument is true', function () {
+      assert.strictEqual(String(metricsToArrayTable(metrics, true)[2][3]).indexOf(chalk.styles.red.open), -1);
+    });
   });
 });
 
