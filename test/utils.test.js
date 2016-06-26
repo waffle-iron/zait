@@ -9,13 +9,13 @@ describe('Utils',  function () {
         url: 'domain.com',
         starttime: 1,
         endtime: 2,
-        status: 'OK'
+        status: 200
       },
       {
         url: 'domain1.com',
         starttime: 100,
         endtime: 2000,
-        status: '401'
+        status: 401
       }
     ];
 
@@ -36,3 +36,4 @@ describe('Utils',  function () {
     });
   });
 });
+
