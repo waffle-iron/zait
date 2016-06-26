@@ -45,9 +45,13 @@ gulp.task('jsdoc', function () {
     .pipe(jsdoc());
 });
 
-gulp.task('test', function () {
-  spawn('./test/.isparta', {
+gulp.task('test', function (pipeline) {
+  const isparta = spawn('./test/.isparta', {
     stdio: 'inherit'
+  });
+
+  isparta.on('close', function (code) {
+    pipeline(code);
   });
 });
 
