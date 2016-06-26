@@ -13,8 +13,7 @@ export function metricsToArrayTable(results) {
 
   table.push(header);
 
-  results.forEach(row => {
-    let column = [];
+  results.forEach(row => { let column = [];
 
     for (let colName in row) {
       if (row.hasOwnProperty(colName)) {
@@ -24,7 +23,10 @@ export function metricsToArrayTable(results) {
           case 'status':
 
             //Check the first number of status code
-            if (['timeout', 'load error'].indexOf(value) === -1 && [1, 2, 3].indexOf(Number(value[0])) !== -1) {
+            if (
+              ['timeout', 'load error'].indexOf(value) === -1 &&
+              [1, 2, 3].indexOf((value / 100) | 0) !== -1
+            ) {
               value = chalk.green(value);
             } else {
               value = chalk.red(value);
