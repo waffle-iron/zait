@@ -27,12 +27,26 @@ describe('Utils',  function () {
       assert.deepEqual(metricsToArrayTable(metrics)[0], ['url', 'starttime', 'endtime', 'status']);
     });
 
-    it('the first row of metrics should contains green status message', function () {
-      assert.notStrictEqual(metricsToArrayTable(metrics)[1][3].indexOf(chalk.styles.green.open), -1);
+    it('the first row of metrics should contains green status message or contains status without ' +
+      'color if cli doesn\'t support colors', function () {
+      const isContainColor = metricsToArrayTable(metrics)[1][3].indexOf(chalk.styles.green.open);
+
+      if (chalk.supportsColor) {
+        assert.notStrictEqual(isContainColor, -1);
+      } else {
+        assert.strictEqual(isContainColor, -1);
+      }
     });
 
-    it('the second row of metrics should contains red status message', function () {
-      assert.notStrictEqual(metricsToArrayTable(metrics)[2][3].indexOf(chalk.styles.red.open), -1);
+    it('the second row of metrics should contains red status message or contains status without ' +
+      'color if cli doesn\'t support colors', function () {
+      const isContainColor = metricsToArrayTable(metrics)[2][3].indexOf(chalk.styles.green.open);
+
+      if (chalk.supportsColor) {
+        assert.notStrictEqual(isContainColor, -1);
+      } else {
+        assert.strictEqual(isContainColor, -1);
+      }
     });
 
     it('should returns non colorized row when raw argument is true', function () {
@@ -40,4 +54,3 @@ describe('Utils',  function () {
     });
   });
 });
-
