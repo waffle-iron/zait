@@ -6,16 +6,18 @@ import {message} from './modules/cli';
 
 import Parser from 'modules/Parser';
 import TimeReceiver from './modules/TimeReceiver';
-import reporters from 'modules/Reporters/reportersRegister';
+import reportersRegister from 'modules/Reporters/reportersRegister';
+
+import typeOf from 'typeof';
 
 const casper = Casper({
-  verbose: true
+  verbose: true,
+  exitOnError: false
 });
 
 //==========DEBUG MODE====================
 casper.on('error', function (err) {
   this.log(err, 'error');
-//  this.exit(1);
 });
 
 //========================================
@@ -28,19 +30,26 @@ const timeReceiver = new TimeReceiver(casper);
 
 let metrics = [];
 
+casper.options.pageSettings.resourceTimeout = parser.parsedConfig.timeout || 1000;
+
 casper.on('page.resource.requested', (res) => {
   message.print(`${res.method}: ${res.url}`);//TODO: make info message and trace mode
 });
 
 casper.on('page.resource.received', (res) => {
-  message.print(`${res.url} was loaded`);//TODO: make info message and trace mode
+  //TODO: make error handlers
+
+  switch (res.status / 100 | 0) {
+    case 2:
+      message.success(`${res.url} was loaded`);//TODO: make info message and trace mode
+      break;
+    case 3:
+      message.print(`Redirect to ${res.redirectURL}`);
+      break;
+    default:
+      message.err(`Error with ${res.url}`);
+  }
 });
-
-casper.options.stepTimeout = parser.parsedConfig.timeout || 1000; //TODO: default parameters only in parser class. 
-
-casper.options.stepTimeout = (timeout) => {
-  message.warn(`Timeout ${timeout}ms was reached`);
-};
 
 casper.start().eachThen(commands, function (res) {
   const command = res.data;
@@ -49,18 +58,21 @@ casper.start().eachThen(commands, function (res) {
     url: command.url
   }) - 1;
 
-  timeReceiver.setPageLoadingTime(metrics[curMetricIndex], command.url);
+  timeReceiver.setPageLoadingTime(metrics[curMetricIndex]);
 
   this.open(command.url, command.opts);
 }).run();
 
 casper.then(function () {
   message.table(metricsToArrayTable(metrics));
-  
-  //TODO temp! for testing
-  const reporterName = 'yaml';
 
-  const reporter = new reporters[reporterName](metrics);
+  let reporter;
+
+  if (typeOf(parser.reporter) === 'string') {
+    reporter = new reportersRegister[parser.reporter](metrics);
+  } else {
+    reporter = new reportersRegister[parser.reporter.name](metrics, parser.reporter.options);
+  }
 
   reporter.report();
 
@@ -72,3 +84,4 @@ casper.then(function () {
 
   casper.exit(reporter.reportStatusCode);
 });
+
