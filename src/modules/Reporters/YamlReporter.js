@@ -44,7 +44,7 @@ class YamlReporter extends Reporter {
     } catch (e) {
       this.reportStatusCode = 1;
 
-      this._reportFailMsg = 'Failed! ' + e.message;
+      this._reportFailMsg = 'Failed! ' + e;
     }
   }
 }

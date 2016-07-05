@@ -23,7 +23,7 @@ class JsonReporter extends Reporter {
     super(metrics, options);
 
     const defaultOptions = {
-      report_path: './zait.report.yml'
+      report_path: './zait.report.json'
     };
 
     this._options = Object.assign(defaultOptions, options);
@@ -44,7 +44,7 @@ class JsonReporter extends Reporter {
     } catch (e) {
       this.reportStatusCode = 1;
 
-      this._reportFailMsg = e.message;
+      this._reportFailMsg = e;
     }
   }
 }
