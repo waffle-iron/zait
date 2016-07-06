@@ -1,5 +1,6 @@
 import commandBuilder from './commandBuilder';
 import yaml from 'js-yaml';
+import typeOf from 'typeof';
 
 /**
  * Parser class
@@ -49,7 +50,15 @@ class Parser {
    * @type {Object}
    */
   get reporter() {
-    return this.parsedConfig.reporter || 'json';
+    if (!this.parsedConfig.reporter) {
+      return { name: 'json' };
+    }
+
+    if (typeOf(this.parsedConfig.reporter) === 'string') {
+      return { name: this.parsedConfig.reporter };
+    }
+
+    return this.parsedConfig.reporter;
   }
 }
 

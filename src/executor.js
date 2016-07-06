@@ -66,13 +66,7 @@ casper.start().eachThen(commands, function (res) {
 casper.then(function () {
   message.table(metricsToArrayTable(metrics));
 
-  let reporter;
-
-  if (typeOf(parser.reporter) === 'string') {
-    reporter = new reportersRegister[parser.reporter](metrics);
-  } else {
-    reporter = new reportersRegister[parser.reporter.name](metrics, parser.reporter.options);
-  }
+  const reporter = new reportersRegister[parser.reporter.name](metrics, parser.reporter.options);
 
   reporter.report();
 
