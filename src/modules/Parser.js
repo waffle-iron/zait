@@ -50,6 +50,11 @@ class Parser {
    * @type {Object}
    */
   get reporter() {
+    let reporter = {
+      name: undefined,
+      options: {}
+    };
+
     if (!this.parsedConfig.reporter) {
       return { name: 'json' };
     }
@@ -58,7 +63,11 @@ class Parser {
       return { name: this.parsedConfig.reporter };
     }
 
-    return this.parsedConfig.reporter;
+    reporter.name = this.parsedConfig.reporter.name;
+    reporter.options = Object.assign({}, this.parsedConfig.reporter);
+    delete reporter.options.name;
+
+    return reporter;
   }
 }
 

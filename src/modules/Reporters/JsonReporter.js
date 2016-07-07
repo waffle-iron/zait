@@ -20,13 +20,11 @@ class JsonReporter extends Reporter {
       fs.write = fs.writeFileSync;
     }
 
-    super(metrics, options);
-
     const defaultOptions = {
       report_path: './zait.report.json'
     };
 
-    this._options = Object.assign(defaultOptions, options);
+    super(metrics, Object.assign(defaultOptions, options));
   }
 
   /**
