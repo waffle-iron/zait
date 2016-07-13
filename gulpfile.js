@@ -82,19 +82,3 @@ gulp.task('watch', function () {
   gulp.watch(paths.from, ['js']);
 });
 
-function logger(err) {
-
-  //Inspired by Vsevolod Rodionov(http://habrahabr.ru/users/Jabher/)
-  console.log(
-        [
-            '',
-            '=====================ERROR====================',
-            '' + err.name + ' in ' + err.plugin + '',
-            err.message,
-            '==============================================',
-            ''
-
-        ].join('\n')
-  );
-  this.emit('end');
-}
