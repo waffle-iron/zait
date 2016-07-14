@@ -13,15 +13,14 @@ const spawn = require('child_process').spawn;
 
 //config
 const paths = {
-  from: ['src/**/*.js', 'app/*.js'],
-  to: 'build/'
+  from: 'src/**/*.js',
+  to: 'lib/'
 };
 
 gulp.task('lint', function () {
   return gulp.src(paths.from, { base: '.' })
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
-
     //.pipe(jshint.reporter('fail'));
 });
 
@@ -67,7 +66,7 @@ gulp.task('casper-test', ['prepare-casper-test'], function () {
 });
 
 gulp.task('js', ['lint', 'jscpd', 'jscs'], function () {
-  return gulp.src(paths.from, { base: '.' })
+  return gulp.src(paths.from)
     .pipe(babel({
       presets: ['es2015']
     }))
