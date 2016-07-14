@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+from argparse import ArgumentParser
+from subprocess import call
+from os import path
+from sys import exit as sys_exit
+import json
+
+
+def main():
+    ap = ArgumentParser(description='Zait: tool for load and availability testing')
+
+    ap.add_argument('--log-level', dest='logLevel', help='Set log level', choices=[])
+    ap.add_argument('--config-path', '-c', dest='configPath', default='./zait.json', help='Path to zait config')
+    ap.add_argument('--parser', '-p', dest='parser', default='json', help='Parser type for config')
+
+    args = ap.parse_args()
+
+    args_json = json.dumps(vars(args))
+    script_path = path.split(path.realpath(__file__))[0]
+    casper_bin = path.join(script_path, '../node_modules/.bin/casperjs')
+    executor = path.join(script_path, "../build/src/executor.js")
+
+    sys_exit(call([casper_bin, executor, args_json]))
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys_exit("Exited by user")
+

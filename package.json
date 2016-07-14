@@ -2,6 +2,7 @@
   "name": "zait",
   "version": "0.2.0-DEV",
   "description": "Get page load time by CasperJS/PhantomJS",
+  "bin": "bin/zait",
   "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
