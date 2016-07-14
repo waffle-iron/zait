@@ -2,7 +2,7 @@
 
 from argparse import ArgumentParser
 from subprocess import call
-from os import path
+from os import path, execvp
 from sys import exit as sys_exit
 import json
 
@@ -19,14 +19,11 @@ def main():
     args_json = json.dumps(vars(args))
     script_path = path.split(path.realpath(__file__))[0]
     casper_bin = path.join(script_path, '../node_modules/.bin/casperjs')
-    executor = path.join(script_path, "../build/src/executor.js")
+    executor = path.join(script_path, "../lib/executor.js")
 
-    sys_exit(call([casper_bin, executor, args_json]))
+    execvp(casper_bin, [script_path, executor, args_json])
 
 
 if __name__ == '__main__':
-    try:
-        main()
-    except KeyboardInterrupt:
-        sys_exit("Exited by user")
+    main()
 
