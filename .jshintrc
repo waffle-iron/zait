@@ -17,6 +17,6 @@
   "withstmt": false,
   
   "browser": true,
-  "browserify": true,
+  "devel": true,
   "mocha": true
 }
