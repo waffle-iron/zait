@@ -79,4 +79,37 @@ describe('Configuration handler', function () {
       assert.isArray(parser.parsedCommands);
     });
   });
+
+  describe('Get reporter', function () {
+    it('should return default reporter(json)', function () {
+      const parser = new Parser('json', '{}');
+
+      assert.strictEqual(parser.reporter.name, 'json');
+    });
+
+    it('should returns reporter object with reporter name, when reporter specified by string', function () {
+      const parser = new Parser('json', '{ "reporter": "yaml" }');
+  
+      assert.strictEqual(parser.reporter.name, 'yaml');
+    });
+
+    it('should returns object with options and name, when reporter specified by object', function () {
+      const jsonConf = JSON.stringify({
+        reporter: {
+          name: 'yaml',
+          report_path: './zait.yml',
+          some_option_for_test: 'test'
+        }
+      });
+      const parser = new Parser('json', jsonConf);
+
+     assert.deepEqual(parser.reporter, {
+       name: 'yaml',
+       options: {
+         report_path: './zait.yml',
+         some_option_for_test: 'test'
+       }
+     });
+    });
+  });
 });
