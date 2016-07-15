@@ -1,4 +1,4 @@
-import JsonReporter from '../src/zait/modules/Reporters/JsonReporter';
+import JsonReporter from '../src/zait/modules/reporters/JsonReporter';
 import {assert} from 'chai';
 import fs from 'fs';
 

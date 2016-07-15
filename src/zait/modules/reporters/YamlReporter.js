@@ -24,7 +24,7 @@ class YamlReporter extends Reporter {
     const defaultOptions = {
       report_path: './zait.report.yml'
     };
-    
+
     super(metrics, Object.assign(defaultOptions, options));
   }
 

@@ -15,7 +15,6 @@ class TimeReceiver {
   /**
    * Set page loading time
    *
-   * @param {String} url Url of page
    * @param {Object} metricsObjRef Reference for metrics object where metrics
    * will be set
    */
@@ -43,7 +42,7 @@ class TimeReceiver {
      *
      * @inner
      */
-    const requestHandler = (resource) => {
+    const requestHandler = () => {
       startTime = new Date().getTime();
 
       metricsObjRef.startTime = startTime;

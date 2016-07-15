@@ -1,2 +1,0 @@
-
-const casper = window.casper;

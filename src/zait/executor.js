@@ -6,9 +6,7 @@ import {message} from './modules/cli';
 
 import Parser from 'modules/Parser';
 import TimeReceiver from './modules/TimeReceiver';
-import reportersRegister from 'modules/Reporters/reportersRegister';
-
-import typeOf from 'typeof';
+import reportersRegister from 'modules/reporters/reportersRegister';
 
 const casper = Casper({
   verbose: true,

@@ -1,4 +1,4 @@
-import YamlReporter from '../src/zait/modules/Reporters/YamlReporter';
+import YamlReporter from '../src/zait/modules/reporters/YamlReporter';
 import {assert} from 'chai';
 import fs from 'fs';
 

@@ -35,8 +35,9 @@ class Reporter {
   get reportLog() {
     switch (this.reportStatusCode) {
       case undefined:
-	this.reportStatusCode = 1
-        return 'Report status wasn\'t changed or reporter didn\'t run. Can not figure out report status.';
+        this.reportStatusCode = 1;
+        return 'Report status wasn\'t changed or reporter didn\'t run. ' +
+          'Can not figure out report status.';
       case 0:
         return this._reportSuccessMsg;
       case 1:
