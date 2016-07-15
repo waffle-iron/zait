@@ -17,7 +17,7 @@ def main():
     args_json = json.dumps(vars(args))
     script_path = path.split(path.realpath(__file__))[0]
     casper_bin = path.join(script_path, '../node_modules/.bin/casperjs')
-    executor = path.join(script_path, "../lib/executor.js")
+    executor = path.join(script_path, "../lib/zait/executor.js")
 
     execvp(casper_bin, [script_path, executor, args_json])
 

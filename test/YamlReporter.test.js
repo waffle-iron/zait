@@ -1,6 +1,6 @@
-import YamlReporter from '../src/modules/Reporters/YamlReporter'
-import {assert} from 'chai'
-import fs from 'fs'
+import YamlReporter from '../src/zait/modules/Reporters/YamlReporter';
+import {assert} from 'chai';
+import fs from 'fs';
 
 describe('YAML Reporter', function () {
 

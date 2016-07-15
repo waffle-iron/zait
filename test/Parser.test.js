@@ -1,4 +1,4 @@
-import Parser from '../src/modules/Parser';
+import Parser from '../src/zait/modules/Parser';
 import {assert} from 'chai';
 
 describe('Configuration handler', function () {

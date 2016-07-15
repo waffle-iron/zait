@@ -1,4 +1,4 @@
-import commandBuilder from '../src/modules/commandBuilder';
+import commandBuilder from '../src/zait/modules/commandBuilder';
 import {assert} from 'chai';
 
 describe('JSON commandBuilder', function () {

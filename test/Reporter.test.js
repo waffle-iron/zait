@@ -1,4 +1,4 @@
-import Reporter from '../src/modules/Reporters/Reporter';
+import Reporter from '../src/zait/modules/Reporters/Reporter';
 import {assert} from 'chai';
 
 describe('Reporter', function () {

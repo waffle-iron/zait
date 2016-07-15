@@ -1,4 +1,4 @@
-import {metricsToArrayTable} from '../src/modules/utils';
+import {metricsToArrayTable} from '../src/zait/modules/utils';
 import {assert} from 'chai';
 import chalk from 'phantomjs-chalk';
 
