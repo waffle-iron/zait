@@ -46,6 +46,8 @@ class TimeReceiver {
     const requestHandler = (resource) => {
       startTime = new Date().getTime();
 
+      metricsObjRef.startTime = startTime;
+
       this.casper.removeListener('page.resource.requested', requestHandler);
     };
 

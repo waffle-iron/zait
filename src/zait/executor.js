@@ -55,7 +55,8 @@ casper.start().eachThen(commands, function (res) {
   const command = res.data;
 
   let curMetricIndex = metrics.push({
-    url: command.url
+    url: command.url,
+    method: command.opts.method
   }) - 1;
 
   timeReceiver.setPageLoadingTime(metrics[curMetricIndex]);
