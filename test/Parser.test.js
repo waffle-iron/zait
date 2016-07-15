@@ -1,7 +1,7 @@
 import Parser from '../src/zait/modules/Parser';
 import {assert} from 'chai';
 
-describe('Configuration handler', function () {
+describe('Parser', function () {
 
   let configJson;
   let configYml;
@@ -39,7 +39,7 @@ describe('Configuration handler', function () {
         url: "http://yandex.ru"`;
   });
 
-  describe('Get parsedConfig', function () {
+  describe('parsedConfig', function () {
 
     it('should return object when parser is json', function () {
       const parser = new Parser('json', configJson);
@@ -72,7 +72,7 @@ describe('Configuration handler', function () {
     });*/
   });
 
-  describe('Get parsed commands', function () {
+  describe('parsedCommands', function () {
     it('should returns array of commands', function () {
       const parser = new Parser('json', configJson);
 
@@ -80,7 +80,7 @@ describe('Configuration handler', function () {
     });
   });
 
-  describe('Get reporter', function () {
+  describe('reporter', function () {
     it('should return default reporter(json)', function () {
       const parser = new Parser('json', '{}');
 
@@ -89,7 +89,7 @@ describe('Configuration handler', function () {
 
     it('should returns reporter object with reporter name, when reporter specified by string', function () {
       const parser = new Parser('json', '{ "reporter": "yaml" }');
-  
+
       assert.strictEqual(parser.reporter.name, 'yaml');
     });
 
