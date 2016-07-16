@@ -6,3 +6,12 @@ script:
     - gulp build
 after_success:
     - npm run coveralls
+deploy:
+    provider: npm
+    on:
+        tags: true
+        branch: master
+    skip_cleanup: true
+    email: ket4yiit@gmail.com
+    api_key:
+        secure: LQb67GVNB8poe4+n7DsOx6j2VeflOFcJ1UL+cxj/9lpC3oByEsg/o/p9d4sJ5+uyFGKiV9XGfxLU6rJCjm6PWaYNY7DhloY5dcdG8/I6fMg4CmS3qPGGaPKLwoSEcrFHvDLIJ7ZRWYEqDUlP6G1x8CJN2E77Xu0kVYVkHpfLJRu5y+J/qiLQRzTvEmXCL1zfhCJd8zuYWvtu9aiKtggrnTnE9tcK1BTsXiU9k208IJFF+Z9ji0WkOc9h5bH0TYI/yQ+MNRajqmBSN9+GS1I0cLktd6mGOsmFaj1ypmTSJAPJA/HtByZkLFd7KR9KWfjTsBjuWToHXprQKlXG7TJtC5ROsGPKbLEx+W2xfynCXdZj9iWmrRmd0E2xLW8QmxbNHQ8sg1duhV+o7brtBwq4wtJRlMrHq4r4iC4fbWukCyP+GE6iCXvbUsRPwVZD6xFB4RiaahnN9vU5xjKIbt3wEIA990ON1A7UfsOgYunH6BFIDq6QIeHVg5KQpZbTMDUC6OdjgVVmx1TrN3wPd9KyE3FjiHOPbZReuC7v0hVouaHAiCEIvA5BnDNuZEwL5zBd4qNwY55H0IIg3Cr3tsf6haO5MC9pgXpNX6H4ThxvpduiojlCCeW31Xrw5KP+b7rqPGpbvJ0VzhalOJWPVi14CAmhrpgJNBWU1KepTzRrJvI=
