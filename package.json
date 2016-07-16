@@ -1,6 +1,6 @@
 {
   "name": "zait",
-  "version": "0.2.0-DEV",
+  "version": "0.2.1",
   "description": "Get page load time by CasperJS/PhantomJS",
   "bin": "bin/zait",
   "main": "",
