@@ -27,6 +27,7 @@ const commands = parser.parsedCommands;
 const timeReceiver = new TimeReceiver(casper);
 
 let metrics = [];
+message.setLevel('info');
 
 casper.options.pageSettings.resourceTimeout = parser.parsedConfig.timeout || 1000;
 
