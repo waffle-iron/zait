@@ -8,13 +8,13 @@ import json
 def main():
     ap = ArgumentParser(description='Zait: tool for load and availability testing')
 
-    ap.add_argument('--log-level', dest='logLevel', help='Set log level', choices=[])
-    ap.add_argument('--config-path', '-c', dest='configPath', default='./zait.json', help='Path to zait config')
-    ap.add_argument('--parser', '-p', dest='parser', default='json', help='Parser type for config')
+    ap.add_argument('--log-level', dest='logLevel', type=str.lower, help='Set log level', choices=[])
+    ap.add_argument('--config-path', '-c', dest='configPath', type=str.lower, default='./zait.json', help='Path to zait config')
+    ap.add_argument('--parser', '-p', dest='parser', type=str.lower, default='json', help='Parser type for config')
 
-    args = ap.parse_args()
+    args = vars(ap.parse_args())
 
-    args_json = json.dumps(vars(args))
+    args_json = json.dumps(args)
     script_path = path.split(path.realpath(__file__))[0]
     casper_bin = path.join(script_path, '../node_modules/.bin/casperjs')
     executor = path.join(script_path, "../lib/zait/executor.js")
