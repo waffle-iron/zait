@@ -14,7 +14,7 @@ const casper = Casper({
 });
 
 //==========DEBUG MODE====================
-casper.on('error', (err) => {
+casper.on('error', function (err) {
   this.log(err, 'error');
 });
 
