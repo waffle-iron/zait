@@ -14,7 +14,7 @@ const casper = Casper({
 });
 
 //==========DEBUG MODE====================
-casper.on('error', function (err) {
+casper.on('error', (err) => {
   this.log(err, 'error');
 });
 
@@ -62,7 +62,7 @@ casper.start().eachThen(commands, function (res) {
   this.open(command.url, command.opts);
 }).run();
 
-casper.then(function () {
+casper.then(() => {
   message.table(metricsToArrayTable(metrics));
 
   const reporter = new reportersRegister[parser.reporter.name](metrics, parser.reporter.options);
