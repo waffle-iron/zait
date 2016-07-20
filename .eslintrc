@@ -6,7 +6,7 @@
   },
   "settings": { "import/core-modules": [ "casper" ] },
   "rules": {
-    "no-underscore-dangle": [2, { "allowAfterThis": true }],
+    "no-underscore-dangle": [0, { "allowAfterThis": true }],
     "no-restricted-syntax": [2, "WithStatement"],
     "comma-dangle": [2, "never"]
   }
