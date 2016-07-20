@@ -11,9 +11,8 @@ engines:
         languages:
         - javascript
           #mass_threshold: 30
-  engines:
-    fixme:
-      enabled: true
+  fixme:
+    enabled: true
 ratings:
    paths:
    - "src"
