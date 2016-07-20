@@ -1,0 +1,13 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "mocha": true
+  },
+  "settings": { "import/core-modules": [ "casper" ] },
+  "rules": {
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "no-restricted-syntax": ["error", "WithStatement"],
+    "comma-dangle": ["error", "never"]
+  }
+}
