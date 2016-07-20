@@ -3,9 +3,8 @@
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const mocha = require('gulp-mocha');
-const jshint = require('gulp-jshint');
+const eslint = require('eslint/lib/cli');
 const jscpd = require('gulp-jscpd');
-const jscs = require('gulp-jscs');
 const jsdoc = require('gulp-jsdoc3');
 const shell = require('gulp-shell');
 
@@ -17,24 +16,14 @@ const paths = {
   to: 'lib/'
 };
 
-gulp.task('lint', function () {
-  return gulp.src(paths.from, { base: '.' })
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'));
-    //.pipe(jshint.reporter('fail'));
+gulp.task('lint', function (pipeline) {
+  const exitCode = eslint.execute('--ext .js src');
+  pipeline(exitCode);
 });
 
 gulp.task('jscpd', function () {
   return gulp.src(paths.from, { base: '.' })
     .pipe(jscpd());
-});
-
-gulp.task('jscs', function () {
-  return gulp.src(paths.from, { base: '.' })
-    .pipe(jscs({
-      errorCount: 20
-    }))
-    .pipe(jscs.reporter());
 });
 
 gulp.task('jsdoc', function () {
@@ -65,7 +54,7 @@ gulp.task('casper-test', ['prepare-casper-test'], function () {
     .pipe(shell(['./node_modules/mocha-casperjs/bin/mocha-casperjs ./build/test/*.js', 'rm -rf ./build/test']))
 });
 
-gulp.task('js', ['lint', 'jscpd', 'jscs'], function () {
+gulp.task('js', function () {
   return gulp.src(paths.from)
     .pipe(babel({
       presets: ['es2015']
@@ -73,7 +62,7 @@ gulp.task('js', ['lint', 'jscpd', 'jscs'], function () {
     .pipe(gulp.dest(paths.to));
 });
 
-gulp.task('build', ['test', 'js', 'casper-test', 'jsdoc']);
+gulp.task('build', ['test', 'lint', 'js', 'jsdoc']);
 
 gulp.task('default', ['js']);
 
