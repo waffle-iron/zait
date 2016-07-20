@@ -46,7 +46,7 @@ casper.on('page.resource.received', (res) => {
       message.print(`Redirect to ${res.redirectURL}`);
       break;
     default:
-      message.err(`Error with ${res.url}`);
+      message.warn(`Error with ${res.url}`);
   }
 });
 
