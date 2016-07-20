@@ -1,9 +1,20 @@
 engines: 
   eslint:
     enabled: true
-    channedl: "eslint-2"
-    
+    channel: "eslint-2"
+    checks:
+      complexity:
+        enabled: true
+  duplication:
+      enabled: true
+      config:
+        languages:
+        - javascript
+          #mass_threshold: 30
+  engines:
+    fixme:
+      enabled: true
 ratings:
    paths:
-   - "src/**.js"
+   - "src"
 
