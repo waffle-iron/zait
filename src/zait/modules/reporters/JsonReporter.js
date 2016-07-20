@@ -1,4 +1,4 @@
-/**@module Reporters*/
+/** @module Reporters */
 
 import Reporter from './Reporter';
 import fs from 'fs';
@@ -31,7 +31,6 @@ class JsonReporter extends Reporter {
    * Write json report to file
    */
   report() {
-
     const jsonReport = JSON.stringify(this._metrics, null, 4);
 
     try {

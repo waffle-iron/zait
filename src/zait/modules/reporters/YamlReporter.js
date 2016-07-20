@@ -1,4 +1,4 @@
-/**@module Reporters*/
+/** @module Reporters */
 
 import Reporter from './Reporter';
 import json2yaml from 'json2yaml';
@@ -42,7 +42,7 @@ class YamlReporter extends Reporter {
     } catch (e) {
       this.reportStatusCode = 1;
 
-      this._reportFailMsg = 'Failed! ' + e;
+      this._reportFailMsg = `Failed! ${e}`; // TODO: remove fail string
     }
   }
 }

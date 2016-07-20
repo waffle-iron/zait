@@ -3,7 +3,7 @@ import stripAnsi from 'strip-ansi';
 import mdTable from 'markdown-table';
 import logger from 'loglevel';
 
-/**@namespace*/
+/** @namespace */
 export const message = {
 
   /**

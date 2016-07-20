@@ -31,7 +31,7 @@ class Parser {
       case 'yml':
         return yaml.load(this.config);
       default:
-        throw new Error('There is no parser for this file.'); //@TODO make custom errors
+        throw new Error('There is no parser for this file.'); // TODO: make custom errors
     }
   }
 
@@ -50,7 +50,7 @@ class Parser {
    * @type {Object}
    */
   get reporter() {
-    let reporter = {
+    const reporter = {
       name: undefined,
       options: {}
     };

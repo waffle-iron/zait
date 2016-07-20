@@ -1,9 +1,9 @@
-/**@module commandBuilder*/
+/** @module commandBuilder */
 
 import typeOf from 'typeof';
 
-/**@namespace*/
-const commandBuilder = {
+/** @namespace */
+const commandBuilder = { // TODO: Refactoring. Rename to commandTransformer and change the doc.
   /**
    * Parse a command to API kind
    *
@@ -11,9 +11,8 @@ const commandBuilder = {
    * @returns {Object} Parsed command (if not parsed command was string
    *                   object will make by default way)
    */
-  buildCommand: function (cmd) {
-    let parsedCmd = {};
-    let methodName;
+  buildCommand(cmd) {
+    const parsedCmd = {};
 
     parsedCmd.opts = {};
 
@@ -24,14 +23,18 @@ const commandBuilder = {
       return parsedCmd;
     }
 
-    methodName = Object.keys(cmd)[0];
+    const methodName = Object.keys(cmd)[0];
 
     parsedCmd.opts.method = methodName;
     parsedCmd.url = cmd[methodName].url;
 
-    delete(cmd[methodName].url);
+    /* eslint-disable */
 
-    for (let opt in cmd[methodName]) {
+    delete(cmd[methodName].url); // FIXME do not reassigne
+
+    /* eslint-enable*/
+
+    for (const opt in cmd[methodName]) {
       /* istanbul ignore else */
       if (cmd[methodName].hasOwnProperty(opt)) {
         parsedCmd.opts[opt] = cmd[methodName][opt];
@@ -47,7 +50,7 @@ const commandBuilder = {
    * @returns {Array} Array of parsed commands (if not parsed command was string
    *                   object will make by default way)
    */
-  buildCommands: function (commands) {
+  buildCommands(commands) {
     return commands.map(this.buildCommand);
   }
 };

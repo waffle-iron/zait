@@ -1,46 +1,43 @@
-import {Casper} from 'casper';
+import { Casper } from 'casper';
 import fs from 'fs';
 
-import {metricsToArrayTable} from './modules/utils';
-import {message} from './modules/cli';
+import { metricsToArrayTable } from './modules/utils';
+import { message } from './modules/cli';
 
-import Parser from 'modules/Parser';
+import Parser from './modules/Parser';
 import TimeReceiver from './modules/TimeReceiver';
-import reportersRegister from 'modules/reporters/reportersRegister';
+import reportersRegister from './modules/reporters/reportersRegister';
 
-const casper = Casper({
+const casper = new Casper({
   verbose: true,
   exitOnError: false
 });
 
-//==========DEBUG MODE====================
-casper.on('error', function (err) {
+casper.on('error', function errHandler(err) {
   this.log(err, 'error');
 });
 
-//========================================
-
-const args = JSON.parse(casper.cli.get(0)); //JSON object of args passed by Python
+const args = JSON.parse(casper.cli.get(0)); // JSON object of args passed by Python
 const conf = fs.read(args.configPath);
 const parser = new Parser(args.parser, conf);
 const commands = parser.parsedCommands;
 const timeReceiver = new TimeReceiver(casper);
+const metrics = [];
 
-let metrics = [];
 message.setLevel('info');
 
 casper.options.pageSettings.resourceTimeout = parser.parsedConfig.timeout || 1000;
 
 casper.on('page.resource.requested', (res) => {
-  message.print(`${res.method}: ${res.url}`);//TODO: make info message and trace mode
+  message.print(`${res.method}: ${res.url}`); // TODO: make info message and trace mode
 });
 
 casper.on('page.resource.received', (res) => {
-  //TODO: make error handlers
+  // TODO: make error handlers
 
   switch (res.status / 100 | 0) {
     case 2:
-      message.success(`${res.url} was loaded`);//TODO: make info message and trace mode
+      message.success(`${res.url} was loaded`); // TODO: make info message and trace mode
       break;
     case 3:
       message.print(`Redirect to ${res.redirectURL}`);
@@ -50,17 +47,17 @@ casper.on('page.resource.received', (res) => {
   }
 });
 
-casper.start().eachThen(commands, function (res) {
+casper.start().eachThen(commands, res => {
   const command = res.data;
 
-  let curMetricIndex = metrics.push({
+  const curMetricIndex = metrics.push({
     url: command.url,
     method: command.opts.method
   }) - 1;
 
   timeReceiver.setPageLoadingTime(metrics[curMetricIndex]);
 
-  this.open(command.url, command.opts);
+  casper.open(command.url, command.opts);
 }).run();
 
 casper.then(() => {

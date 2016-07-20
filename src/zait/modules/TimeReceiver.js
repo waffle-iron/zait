@@ -22,19 +22,24 @@ class TimeReceiver {
     let startTime;
     let endTime;
 
-    /**
+   /**
      * Timeout event handler
      *
      * @inner
      */
-    const timeoutHandler = () => {
+    const timeoutHandler = () => { // TODO maybe timeout handler is no needed
       endTime = new Date().getTime();
+
+      /* eslint-disable */
 
       metricsObjRef.loadTime = endTime - startTime;
       metricsObjRef.status = 'timeout';
 
+
       this.casper.removeListener('timeout', timeoutHandler);
       this.casper.removeListener('page.resource.received', receiveHandler);
+
+      /* eslint-enable */
     };
 
     /**
@@ -45,7 +50,11 @@ class TimeReceiver {
     const requestHandler = () => {
       startTime = new Date().getTime();
 
+      /* eslint-disable */
+
       metricsObjRef.startTime = startTime;
+
+      /* eslint-enable */
 
       this.casper.removeListener('page.resource.requested', requestHandler);
     };
@@ -59,12 +68,16 @@ class TimeReceiver {
     const receiveHandler = (resource) => {
       endTime = new Date().getTime();
 
+      /* eslint-disable*/
+
       metricsObjRef.loadTime = endTime - startTime;
       if (resource.status !== null) {
         metricsObjRef.status = resource.status;
       } else {
         metricsObjRef.status = 'load error';
       }
+
+      /* eslint-enable */
 
       this.casper.removeListener('timeout', timeoutHandler);
       this.casper.removeListener('page.resource.received', receiveHandler);

@@ -1,4 +1,4 @@
-/**@module utlis*/
+/** @module utlis */
 import chalk from 'phantomjs-chalk';
 
 /**
@@ -10,23 +10,23 @@ import chalk from 'phantomjs-chalk';
  */
 export function metricsToArrayTable(results, raw = false) {
   const header = Object.keys(results[0]);
-  let table = [];
+  const table = [];
 
   table.push(header);
 
   results.forEach(row => {
-    let column = [];
+    const column = [];
 
-    for (let colName in row) {
+    for (const colName in row) {
       if (row.hasOwnProperty(colName)) {
         let value = row[colName];
 
-        //TODO needs refactor(maybe)
+        // TODO needs refactor(maybe)
         if (!raw) {
           switch (colName) {
             case 'status':
 
-              //Check the first number of status code
+              // Check the first number of status code
               if (
                 ['timeout', 'load error'].indexOf(value) === -1 &&
                 [1, 2, 3].indexOf((value / 100) | 0) !== -1
@@ -45,7 +45,6 @@ export function metricsToArrayTable(results, raw = false) {
           column.push(value);
         }
       }
-
     }
 
     table.push(column);
