@@ -2,6 +2,23 @@ import commandBuilder from './commandBuilder';
 import yaml from 'js-yaml';
 import typeOf from 'typeof';
 
+/*
+ * Parse error class
+ */
+class ParserError extends Error {
+
+  /**
+   * Ser error message
+   *
+   * @param {String} message Error message
+   */
+  constructor(message) {
+    super(message);
+    this.message = message;
+    this.name = 'ParserError';
+  }
+}
+
 /**
  * Parser class
  */
@@ -31,7 +48,7 @@ class Parser {
       case 'yml':
         return yaml.load(this.config);
       default:
-        throw new Error('There is no parser for this file.'); // TODO: make custom errors
+        throw new ParserError('There is no parser for this file.');
     }
   }
 
