@@ -14,6 +14,8 @@ engines:
   fixme:
     enabled: true
 ratings:
-   paths:
-   - "src"
+  paths:
+  - src/**
+exclude_paths:
+- test
 
