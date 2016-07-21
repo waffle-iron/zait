@@ -8,7 +8,7 @@ import json
 def main():
     ap = ArgumentParser(description='Zait: tool for load and availability testing')
 
-    ap.add_argument('--log-level', dest='logLevel', type=str.lower, help='Set log level', choices=['trace', 'debug', 'info', 'warn', 'error', 'silent'])
+    ap.add_argument('--log-level', dest='logLevel', type=str.lower, help='Set log level', default='error', choices=['trace', 'debug', 'info', 'warn', 'error', 'silent'])
     ap.add_argument('--config-path', '-c', dest='configPath', default='./zait.json', help='Path to zait config')
     ap.add_argument('--parser', '-p', dest='parser', type=str.lower, default='json', help='Parser type for config', choices=['json', 'yml'])
 
