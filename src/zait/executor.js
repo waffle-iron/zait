@@ -10,11 +10,11 @@ import reportersRegister from './modules/reporters/reportersRegister';
 
 const casper = new Casper({
   verbose: true,
-  exitOnError: false
+  exitOnError: true
 });
 
-casper.on('error', function errHandler(err) {
-  this.log(err, 'error');
+casper.on('error', err => {
+  message.err(err);
 });
 
 const args = JSON.parse(casper.cli.get(0)); // JSON object of args passed by Python
