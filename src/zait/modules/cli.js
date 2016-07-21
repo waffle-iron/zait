@@ -43,12 +43,21 @@ export const message = {
   },
 
   /**
-   * Change log level
+   * Set log level
    *
    * @param {String} lvl Level for log
    */
-  setLevel(lvl) {
+  set logLevel(lvl) {
     logger.setLevel(lvl);
+  },
+
+  /**
+   * Get log level
+   *
+   * returns {Number} Log level
+   */
+  get logLevel() {
+    return logger.getLevel();
   },
 
   /**
