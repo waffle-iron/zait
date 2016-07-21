@@ -13,18 +13,23 @@ const casper = new Casper({
   exitOnError: true
 });
 
+const args = JSON.parse(casper.cli.get(0)); // JSON object of args passed by Python
+
+message.logLevel = args.logLevel;
+
 casper.on('error', err => {
-  message.err(err);
+  if (message.logLevel !== 5) {
+    casper.log(err, 'error');
+  }
+
+  casper.exit(1);
 });
 
-const args = JSON.parse(casper.cli.get(0)); // JSON object of args passed by Python
 const conf = fs.read(args.configPath);
 const parser = new Parser(args.parser, conf);
 const commands = parser.parsedCommands;
 const timeReceiver = new TimeReceiver(casper);
 const metrics = [];
-
-message.setLevel(args.logLevel);
 
 casper.options.pageSettings.resourceTimeout = parser.parsedConfig.timeout || 1000;
 
