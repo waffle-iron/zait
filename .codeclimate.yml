@@ -18,4 +18,4 @@ ratings:
   - src/**
 exclude_paths:
 - test
-
+- gulpfile.js
