@@ -5,6 +5,8 @@ engines:
     checks:
       complexity:
         enabled: true
+      import/no-unresolved:
+        enabled: false
   duplication:
       enabled: true
       config:
