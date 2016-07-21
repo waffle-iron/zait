@@ -25,21 +25,9 @@ const commandBuilder = { // TODO: Refactoring. Rename to commandTransformer and 
 
     const methodName = Object.keys(cmd)[0];
 
-    parsedCmd.opts.method = methodName;
     parsedCmd.url = cmd[methodName].url;
-
-    /* eslint-disable */
-
-    delete(cmd[methodName].url); // FIXME do not reassigne
-
-    /* eslint-enable*/
-
-    for (const opt in cmd[methodName]) {
-      /* istanbul ignore else */
-      if (cmd[methodName].hasOwnProperty(opt)) {
-        parsedCmd.opts[opt] = cmd[methodName][opt];
-      }
-    }
+    parsedCmd.opts = Object.assign({ method: methodName }, cmd[methodName]);
+    delete parsedCmd.opts.url; // FIXME Narrow place for perfomance, maybe undefined or loop(if)?
 
     return parsedCmd;
   },
