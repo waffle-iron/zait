@@ -40,8 +40,8 @@ class Reporter {
         return this._reportFailMsg;
       default:
         this.reportStatusCode = 1;
-        return 'Report status wasn\'t changed or reporter didn\'t run. ' +
-          'Can not figure out report status.'; // TODO fix message
+        return 'Can not figure out report status. ' +
+          'Please check reporter results by yourself and alert developer.';
     }
   }
 }

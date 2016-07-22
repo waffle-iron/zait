@@ -12,7 +12,8 @@ describe('Reporter', function () {
     it('should return standard message, when report status is undefined', function () {
       assert.strictEqual(
         reporter.reportLog,
-        'Report status wasn\'t changed or reporter didn\'t run. Can not figure out report status.'
+        'Can not figure out report status. Please check reporter results' +
+        ' by yourself and alert developer.'
       );
     });
 
