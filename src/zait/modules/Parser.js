@@ -1,4 +1,4 @@
-import commandBuilder from './commandBuilder';
+import commandBuilder from './commandTransformer';
 import yaml from 'js-yaml';
 import typeOf from 'typeof';
 
@@ -58,7 +58,7 @@ class Parser {
    * @type {Array}
    */
   get parsedCommands() {
-    return commandBuilder.buildCommands(this.parsedConfig.commands);
+    return commandBuilder.transformCommands(this.parsedConfig.commands);
   }
 
   /**

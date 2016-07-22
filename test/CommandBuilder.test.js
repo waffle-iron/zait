@@ -1,18 +1,18 @@
-import commandBuilder from '../src/zait/modules/commandBuilder';
+import commandBuilder from '../src/zait/modules/commandTransformer';
 import {assert} from 'chai';
 
 describe('JSON commandBuilder', function () {
-  describe('buildCommand', function () {
+  describe('transformCommand', function () {
     it('should return object when string argument pass', function () {
       const url = 'http://example.com',
-        parsedCommand = commandBuilder.buildCommand(url);
+        parsedCommand = commandBuilder.transformCommand(url);
 
       assert.isObject(parsedCommand);
     });
 
     it('should return default object when string argument pass', function () {
       const url = 'http://example.com',
-        parsedCommand = commandBuilder.buildCommand(url);
+        parsedCommand = commandBuilder.transformCommand(url);
 
       assert.deepProperty(parsedCommand, 'opts.method');
       assert.property(parsedCommand, 'url');
@@ -20,14 +20,14 @@ describe('JSON commandBuilder', function () {
 
     it('should return default object with GET method', function () {
       const url = 'http://example.com',
-        parsedCommand = commandBuilder.buildCommand(url);
+        parsedCommand = commandBuilder.transformCommand(url);
 
       assert.deepPropertyVal(parsedCommand, 'opts.method', 'GET');
     });
 
     it('should return default object with defined url method', function () {
       const url = 'http://example.com',
-        parsedCommand = commandBuilder.buildCommand(url);
+        parsedCommand = commandBuilder.transformCommand(url);
 
       assert.isDefined(parsedCommand.url);
     });
@@ -45,7 +45,7 @@ describe('JSON commandBuilder', function () {
             }
           }
         },
-        parsedCommand = commandBuilder.buildCommand(command);
+        parsedCommand = commandBuilder.transformCommand(command);
 
       assert.property(parsedCommand, 'url');
       assert.deepProperty(parsedCommand, 'opts.headers');
@@ -62,16 +62,16 @@ describe('JSON commandBuilder', function () {
             }
           }
         },
-        parsedCommand = commandBuilder.buildCommand(command);
+        parsedCommand = commandBuilder.transformCommand(command);
 
       assert.deepPropertyVal(parsedCommand, 'opts.method', 'POST');
     });
   });
 
-  describe('buildCommands', function () {
+  describe('transformCommands', function () {
     it('should return array of default objects when array of string argument pass', function () {
       const urls = ['http://example4.com', 'http://example3.com', 'http://example2.com', 'http://example1.com'],
-        parsedCommands = commandBuilder.buildCommands(urls);
+        parsedCommands = commandBuilder.transformCommands(urls);
 
       assert.isArray(parsedCommands);
       parsedCommands.forEach(assert.isObject);
@@ -79,14 +79,14 @@ describe('JSON commandBuilder', function () {
 
     it('should return array which has length of 4', function () {
       const urls = ['http://example4.com', 'http://example3.com', 'http://example2.com', 'http://example1.com'],
-        parsedCommands = commandBuilder.buildCommands(urls);
+        parsedCommands = commandBuilder.transformCommands(urls);
 
       assert.lengthOf(parsedCommands, 4);
     });
 
     it('should return array of objects when array of string argument pass', function () {
       const urls = ['http://example4.com', 'http://example3.com', 'http://example2.com', 'http://example1.com'],
-        parsedCommands = commandBuilder.buildCommands(urls);
+        parsedCommands = commandBuilder.transformCommands(urls);
 
       assert.isArray(parsedCommands);
       parsedCommands.forEach(assert.isObject);
@@ -110,7 +110,7 @@ describe('JSON commandBuilder', function () {
           },
           'http://example.com'
         ],
-        parsedCommands = commandBuilder.buildCommands(urls);
+        parsedCommands = commandBuilder.transformCommands(urls);
 
       assert.isArray(parsedCommands);
       parsedCommands.forEach(assert.isObject);

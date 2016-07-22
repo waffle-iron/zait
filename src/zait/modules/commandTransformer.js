@@ -1,17 +1,17 @@
-/** @module commandBuilder */
+/** @module commandTransformer */
 
 import typeOf from 'typeof';
 
 /** @namespace */
-const commandBuilder = { // TODO: Refactoring. Rename to commandTransformer and change the doc.
+const commandTransformer = { // TODO: Refactoring. Rename to commandTransformer and change the doc.
   /**
-   * Parse a command to API kind
+   * Transform a command to API kind
    *
-   * @param   {Object|String} cmd Command to parse
-   * @returns {Object} Parsed command (if not parsed command was string
+   * @param   {Object|String} cmd Command to transform
+   * @returns {Object} Transformed command (if not parsed command was string
    *                   object will make by default way)
    */
-  buildCommand(cmd) {
+  transformCommand(cmd) {
     const parsedCmd = {};
 
     parsedCmd.opts = {};
@@ -32,15 +32,15 @@ const commandBuilder = { // TODO: Refactoring. Rename to commandTransformer and 
     return parsedCmd;
   },
   /**
-   * Parse a commands to API kind
+   * Transform commands to API kind
    *
-   * @param   {Array} commands Commands to parse
-   * @returns {Array} Array of parsed commands (if not parsed command was string
+   * @param   {Array} commands Commands to transform
+   * @returns {Array} Array of transformed commands (if not parsed command was string
    *                   object will make by default way)
    */
-  buildCommands(commands) {
-    return commands.map(this.buildCommand);
+  transformCommands(commands) {
+    return commands.map(this.transformCommand);
   }
 };
 
-export default commandBuilder;
+export default commandTransformer;
