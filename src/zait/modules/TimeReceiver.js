@@ -38,11 +38,11 @@ class TimeReceiver {
 
         this.casper.removeListener('timeout', timeoutHandler);
 
-        /* eslint-disabled */
+        /* eslint-disable */
 
         this.casper.removeListener('page.resource.received', receiveHandler);
 
-        /* eslint-enabled */
+        /* eslint-enable */
 
         resolve(measures);
       };
