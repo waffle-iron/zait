@@ -1,3 +1,5 @@
+import { Promise } from 'es6-promise';
+
 /**
  *
  * Time receiver class
@@ -13,82 +15,74 @@ class TimeReceiver {
   }
 
   /**
-   * Set page loading time
+   * Get page resource load time
    *
-   * @param {Object} metricsObjRef Reference for metrics object where metrics
-   * will be set
+   * @param {Promise} Promise, that returns received measures
    */
-  setPageLoadingTime(metricsObjRef) {
-    let startTime;
-    let endTime;
+  getLoadTime() {
+    return new Promise(resolve => {
+      const measures = {};
+      let startTime;
+      let endTime;
 
-   /**
-     * Timeout event handler
-     *
-     * @inner
-     */
-    const timeoutHandler = () => { // TODO maybe timeout handler is no needed
-      endTime = new Date().getTime();
+      /**
+       * Timeout event handler
+       *
+       * @inner
+       */
+      const timeoutHandler = () => { // TODO maybe timeout handler is no needed
+        endTime = new Date().getTime();
 
-      /* eslint-disable */
+        measures.loadTime = endTime - startTime;
+        measures.status = 'timeout';
 
-      metricsObjRef.loadTime = endTime - startTime;
-      metricsObjRef.status = 'timeout';
+        this.casper.removeListener('timeout', timeoutHandler);
+        this.casper.removeListener('page.resource.received', receiveHandler);
 
+        resolve(measures);
+      };
 
-      this.casper.removeListener('timeout', timeoutHandler);
-      this.casper.removeListener('page.resource.received', receiveHandler);
+      /**
+       * Request handler to set start time of page resource load
+       *
+       * @inner
+       */
+      const requestHandler = () => {
+        startTime = new Date().getTime();
 
-      /* eslint-enable */
-    };
+        measures.startTime = startTime;
 
-    /**
-     * Request handler to set start time of page loading
-     *
-     * @inner
-     */
-    const requestHandler = () => {
-      startTime = new Date().getTime();
+        this.casper.removeListener('page.resource.requested', requestHandler);
+      };
 
-      /* eslint-disable */
+      /**
+       * Receive handler to set end time of resource load
+       * and reset listeners.
+       *
+       * @inner
+       */
+      const receiveHandler = (resource) => {
+        endTime = new Date().getTime();
 
-      metricsObjRef.startTime = startTime;
+        measures.loadTime = endTime - startTime;
+        if (resource.status !== null) {
+          measures.status = resource.status;
+        } else {
+          measures.status = 'load error';
+        }
 
-      /* eslint-enable */
+        this.casper.removeListener('timeout', timeoutHandler);
+        this.casper.removeListener('page.resource.received', receiveHandler);
+        resolve(measures);
+      };
 
-      this.casper.removeListener('page.resource.requested', requestHandler);
-    };
-
-    /**
-     * Receive handler to set end time of page loading
-     * and clearing.
-     *
-     * @inner
-     */
-    const receiveHandler = (resource) => {
-      endTime = new Date().getTime();
-
-      /* eslint-disable*/
-
-      metricsObjRef.loadTime = endTime - startTime;
-      if (resource.status !== null) {
-        metricsObjRef.status = resource.status;
-      } else {
-        metricsObjRef.status = 'load error';
-      }
-
-      /* eslint-enable */
-
-      this.casper.removeListener('timeout', timeoutHandler);
-      this.casper.removeListener('page.resource.received', receiveHandler);
-    };
-
-    /**
-     * @todo Add jsdoc for events events
-     */
-    this.casper.on('page.resource.requested', requestHandler);
-    this.casper.on('stepTimeout', timeoutHandler);
-    this.casper.on('page.resource.received', receiveHandler);
+      /**
+       * @todo Add jsdoc for events events
+       */
+      this.casper.on('page.resource.requested', requestHandler);
+      this.casper.on('stepTimeout', timeoutHandler);
+      this.casper.on('page.resource.received', receiveHandler);
+    });
   }
 }
 
