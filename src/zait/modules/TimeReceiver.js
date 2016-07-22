@@ -37,7 +37,12 @@ class TimeReceiver {
         measures.status = 'timeout';
 
         this.casper.removeListener('timeout', timeoutHandler);
+
+        /* eslint-disabled */
+
         this.casper.removeListener('page.resource.received', receiveHandler);
+
+        /* eslint-enabled */
 
         resolve(measures);
       };
