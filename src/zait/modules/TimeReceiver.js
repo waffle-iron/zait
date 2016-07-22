@@ -17,7 +17,7 @@ class TimeReceiver {
   /**
    * Get page resource load time
    *
-   * @param {Promise} Promise, that returns received measures
+   * @returns {Promise} Promise, that returns received measures
    */
   getLoadTime() {
     return new Promise(resolve => {
