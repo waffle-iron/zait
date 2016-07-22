@@ -60,9 +60,13 @@ casper.start().eachThen(commands, res => {
     method: command.opts.method
   }) - 1;
 
-  timeReceiver.setPageLoadingTime(metrics[curMetricIndex]);
+  const measuresPromise = timeReceiver.getLoadTime();
 
   casper.open(command.url, command.opts);
+
+  measuresPromise.then(measures => {
+    metrics[curMetricIndex] = Object.assign(metrics[curMetricIndex], measures);
+  });
 }).run();
 
 casper.then(() => {
