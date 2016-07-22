@@ -27,28 +27,23 @@ class Parser {
   /**
    * Set parser config and parser type
    *
-   * @param {String} confParser Parser type
    * @param {String} config Raw Zait configuration
    */
-  constructor(confParser, config) {
-    this.confParser = confParser;
+  constructor(config) {
     this.config = config;
   }
 
   /**
    * Get parsed config file
    *
-   * @throws {Error} Throw error if there is no commandBuilder for a file.
+   * @throws {Error} Throw error if can't parse config.
    * @type {JSON}
    */
   get parsedConfig() {
-    switch (this.confParser) {
-      case 'json':
-        return JSON.parse(this.config);
-      case 'yml':
-        return yaml.load(this.config);
-      default:
-        throw new ParserError('There is no parser for this file.');
+    try {
+      return yaml.load(this.config);
+    } catch (e) {
+      throw new ParserError(e.message);
     }
   }
 

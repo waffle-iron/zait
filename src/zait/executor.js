@@ -26,7 +26,7 @@ casper.on('error', err => {
 });
 
 const conf = fs.read(args.configPath);
-const parser = new Parser(args.parser, conf);
+const parser = new Parser(conf);
 const commands = parser.parsedCommands;
 const timeReceiver = new TimeReceiver(casper);
 const metrics = [];

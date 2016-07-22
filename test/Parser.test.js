@@ -41,20 +41,14 @@ describe('Parser', function () {
 
   describe('parsedConfig', function () {
 
-    it('should return object when parser is json', function () {
-      const parser = new Parser('json', configJson);
+    it('should returns object, when configuration is valid', function () {
+      const parser = new Parser(configJson);
 
       assert.isObject(parser.parsedConfig);
     });
 
-    it('should return object when parser is yml', function () {
-      const parser = new Parser('yml', configYml);
-
-      assert.isObject(parser.parsedConfig);
-    });
-
-    it('should throws error when parser does not exist', function () {
-      const parser = new Parser('nonexistenparser', configJson);
+    it('should throws error when config is invalid', function () {
+      const parser = new Parser('{ invalid');
 
       let getterThrowsErr = false;
 
@@ -74,21 +68,22 @@ describe('Parser', function () {
 
   describe('parsedCommands', function () {
     it('should returns array of commands', function () {
-      const parser = new Parser('json', configJson);
+      const parser = new Parser(configJson);
 
       assert.isArray(parser.parsedCommands);
     });
   });
 
   describe('reporter', function () {
+
     it('should return default reporter(json)', function () {
-      const parser = new Parser('json', '{}');
+      const parser = new Parser('{}');
 
       assert.strictEqual(parser.reporter.name, 'json');
     });
 
     it('should returns reporter object with reporter name, when reporter specified by string', function () {
-      const parser = new Parser('json', '{ "reporter": "yaml" }');
+      const parser = new Parser('{ "reporter": "yaml" }');
 
       assert.strictEqual(parser.reporter.name, 'yaml');
     });
@@ -101,7 +96,7 @@ describe('Parser', function () {
           some_option_for_test: 'test'
         }
       });
-      const parser = new Parser('json', jsonConf);
+      const parser = new Parser(jsonConf);
 
      assert.deepEqual(parser.reporter, {
        name: 'yaml',
