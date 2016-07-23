@@ -1,4 +1,10 @@
 {
   "presets": ["es2015"],
-  "plugins": ["transform-es2015-modules-commonjs", "transform-object-assign"]
+  "plugins": [
+    "transform-es2015-modules-commonjs", 
+    "transform-object-assign",
+    ["babel-plugin-transform-builtin-extend", {
+        "globals": ["Error"]
+    }]
+  ]
 }
