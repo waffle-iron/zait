@@ -1,10 +1,9 @@
 language: node_js
 node_js: 6
 branches:
-    only:
-        - master
-        - dev
-efore_script:
+    except:
+        - /^experimental.*$/
+before_script:
     - npm install -g gulp
 script:
     - gulp build
