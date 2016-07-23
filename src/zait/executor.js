@@ -66,7 +66,7 @@ casper.start().eachThen(commands, res => {
 
   measuresPromise
     .then(collectedMeasures => {
-      measures[curMeasureIndex] = Object.assign(measures[curMeasureIndex], collectedMeasures);
+      measures[curMeasureIndex] = collectedMeasures;
     })
     .catch(e => {
       throw e;
