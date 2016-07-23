@@ -1,4 +1,4 @@
-import Parser from '../src/zait/modules/Parser';
+import Parser, { ParserError } from '../src/zait/modules/Parser';
 import {assert} from 'chai';
 
 describe('Parser', function () {
@@ -50,15 +50,7 @@ describe('Parser', function () {
     it('should throws error when config is invalid', function () {
       const parser = new Parser('{ invalid');
 
-      let getterThrowsErr = false;
-
-      try {
-        parser.parsedConfig;
-      } catch (e) {
-        getterThrowsErr = true;
-      }
-
-      assert.isTrue(getterThrowsErr, 'should throw error');
+      assert.throws(() => parser.parsedConfig, ParserError);
     });
 
     /*it('should return object when parser is yml', function () {

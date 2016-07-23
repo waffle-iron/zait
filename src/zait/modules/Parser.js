@@ -5,7 +5,7 @@ import typeOf from 'typeof';
 /*
  * Parse error class
  */
-class ParserError extends Error {
+export class ParserError extends Error {
 
   /**
    * Ser error message
