@@ -64,9 +64,13 @@ casper.start().eachThen(commands, res => {
 
   casper.open(command.url, command.opts);
 
-  measuresPromise.then(measures => {
-    metrics[curMetricIndex] = Object.assign(metrics[curMetricIndex], measures);
-  });
+  measuresPromise
+    .then(measures => {
+      metrics[curMetricIndex] = Object.assign(metrics[curMetricIndex], measures);
+    })
+    .catch(e => {
+      throw e;
+    });
 }).run();
 
 casper.then(() => {
