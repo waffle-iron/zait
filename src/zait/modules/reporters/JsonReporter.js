@@ -11,11 +11,11 @@ class JsonReporter extends Reporter {
   /**
    * Initialize reporter
    *
-   * @param {Object} metrics Metrics
+   * @param {Object} measures measures
    * @param {Object|Undefined} options Reporter options
    * @param {String} env Get environment for testing TODO: DI required instead of
    */
-  constructor(metrics, options = {}, env = 'prod') {
+  constructor(measures, options = {}, env = 'prod') {
     if (env === 'test') {
       fs.write = fs.writeFileSync;
     }
@@ -24,14 +24,14 @@ class JsonReporter extends Reporter {
       report_path: './zait.report.json'
     };
 
-    super(metrics, Object.assign(defaultOptions, options));
+    super(measures, Object.assign(defaultOptions, options));
   }
 
   /**
    * Write json report to file
    */
   report() {
-    const jsonReport = JSON.stringify(this._metrics, null, 4);
+    const jsonReport = JSON.stringify(this._measures, null, 4);
 
     try {
       fs.write(this._options.report_path, jsonReport);

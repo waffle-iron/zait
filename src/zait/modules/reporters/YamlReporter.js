@@ -12,11 +12,11 @@ class YamlReporter extends Reporter {
   /**
    * Initialize reporter
    *
-   * @param {Object} metrics Metrics
+   * @param {Object} measures measures
    * @param {Object|Undefined} options Reporter options
    * @param {String} env Get environment for testing
    */
-  constructor(metrics, options = {}, env = 'prod') {
+  constructor(measures, options = {}, env = 'prod') {
     if (env === 'test') {
       fs.write = fs.writeFileSync;
     }
@@ -25,14 +25,14 @@ class YamlReporter extends Reporter {
       report_path: './zait.report.yml'
     };
 
-    super(metrics, Object.assign(defaultOptions, options));
+    super(measures, Object.assign(defaultOptions, options));
   }
 
   /**
    * Output YAML report file
    */
   report() {
-    const yamlReport = json2yaml.stringify(this._metrics);
+    const yamlReport = json2yaml.stringify(this._measures);
 
     try {
       fs.write(this._options.report_path, yamlReport);

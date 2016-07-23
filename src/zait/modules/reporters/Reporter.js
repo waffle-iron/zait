@@ -7,20 +7,20 @@ class Reporter {
   /**
    * Initialize reporter
    *
-   * @param {Object} metrics
+   * @param {Object} measures
    * @param {Object} options
    */
-  constructor(metrics, options) {
+  constructor(measures, options) {
     this.reportStatus = undefined;
 
-    this._metrics = metrics;
+    this._measures = measures;
     this._options = options;
     this._reportSuccessMsg = 'Success';
     this._reportFailMsg = 'Fail';
   }
 
   /**
-   * Report metrics method
+   * Report measures method
    * @abstract
    */
   report() {

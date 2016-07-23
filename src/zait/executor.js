@@ -1,7 +1,7 @@
 import { Casper } from 'casper';
 import fs from 'fs';
 
-import { metricsToArrayTable } from './modules/utils';
+import { measuresToArrayTable } from './modules/utils';
 import { message } from './modules/cli';
 
 import Parser from './modules/Parser';
@@ -29,7 +29,7 @@ const conf = fs.read(args.configPath);
 const parser = new Parser(conf);
 const commands = parser.parsedCommands;
 const timeReceiver = new TimeReceiver(casper);
-const metrics = [];
+const measures = [];
 
 casper.options.pageSettings.resourceTimeout = parser.parsedConfig.timeout || 1000;
 
@@ -55,7 +55,7 @@ casper.on('page.resource.received', (res) => {
 casper.start().eachThen(commands, res => {
   const command = res.data;
 
-  const curMetricIndex = metrics.push({
+  const curMeasureIndex = measures.push({
     url: command.url,
     method: command.opts.method
   }) - 1;
@@ -65,8 +65,8 @@ casper.start().eachThen(commands, res => {
   casper.open(command.url, command.opts);
 
   measuresPromise
-    .then(measures => {
-      metrics[curMetricIndex] = Object.assign(metrics[curMetricIndex], measures);
+    .then(collectedMeasures => {
+      measures[curMeasureIndex] = Object.assign(measures[curMeasureIndex], collectedMeasures);
     })
     .catch(e => {
       throw e;
@@ -74,9 +74,9 @@ casper.start().eachThen(commands, res => {
 }).run();
 
 casper.then(() => {
-  message.table(metricsToArrayTable(metrics));
+  message.table(measuresToArrayTable(measures));
 
-  const reporter = new reportersRegister[parser.reporter.name](metrics, parser.reporter.options);
+  const reporter = new reportersRegister[parser.reporter.name](measures, parser.reporter.options);
 
   reporter.report();
 

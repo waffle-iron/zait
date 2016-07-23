@@ -2,13 +2,13 @@
 import chalk from 'phantomjs-chalk';
 
 /**
- * Transform metrics to array table
+ * Transform measures to array table
  *
- * @param {Object} results Metrics to transform
+ * @param {Object} results measures to transform
  * @param {Boolean} raw Returns table without changes?(colorizing etc.)
  * @returns {Array} Array table
  */
-export function metricsToArrayTable(results, raw = false) {
+export function measuresToArrayTable(results, raw = false) {
   const header = Object.keys(results[0]);
   const table = [];
 

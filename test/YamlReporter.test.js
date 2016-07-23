@@ -5,13 +5,13 @@ import fs from 'fs';
 describe('YAML Reporter', function () {
 
   describe('report()', function () {
-    let metrics;
+    let measures;
     let options = {};
 
     before(function () {
-      metrics = {
+      measures = {
         some: 'Just',
-        metrics: 'Do',
+        measures: 'Do',
         for_test: 'It'
       };
     });
@@ -25,7 +25,7 @@ describe('YAML Reporter', function () {
     it('report file should exists', function () {
       options.report_path = './zait_report.yml';
       
-      const yamlReporter = new YamlReporter(metrics, options, 'test');
+      const yamlReporter = new YamlReporter(measures, options, 'test');
       
       yamlReporter.report();
       
@@ -35,7 +35,7 @@ describe('YAML Reporter', function () {
     it('should throws error when it can\'t reports', function () {
       options.report_path = '/zait_cant_report_here';
 
-      const yamlReporter = new YamlReporter(metrics, options, 'test');
+      const yamlReporter = new YamlReporter(measures, options, 'test');
 
       assert.throws(yamlReporter.report)
     });
@@ -43,7 +43,7 @@ describe('YAML Reporter', function () {
     it('report status code should be zero', function () {
       options.report_path = './zait_report.yml';
 
-      const yamlReporter = new YamlReporter(metrics, options, 'test');
+      const yamlReporter = new YamlReporter(measures, options, 'test');
 
       yamlReporter.report();
 
@@ -53,7 +53,7 @@ describe('YAML Reporter', function () {
     it('report status code should be non zero', function () {
       options.report_path = '/zait_cant_report_here';
 
-      const yamlReporter = new YamlReporter(metrics, options, 'test');
+      const yamlReporter = new YamlReporter(measures, options, 'test');
       
       yamlReporter.report();
 

@@ -5,13 +5,13 @@ import fs from 'fs';
 describe('JSON reporter', function () {
 
   describe('report()', function () {
-    let metrics;
+    let measures;
     let options = {};
 
     before(function () {
-      metrics = {
+      measures = {
         some: 'Yeah',
-        metrics: 'Baby',
+        measures: 'Baby',
         for_test: 'test me fully'
       };
     });
@@ -25,7 +25,7 @@ describe('JSON reporter', function () {
     it('report file should exists', function () {
       options.report_path = './zait_report.json';
 
-      const jsonReporter = new JsonReporter(metrics, options, 'test');
+      const jsonReporter = new JsonReporter(measures, options, 'test');
 
       jsonReporter.report();
 
@@ -35,7 +35,7 @@ describe('JSON reporter', function () {
     it('should throws error when it can\'t reports', function () {
       options.report_path = '/zait_doesn_is_not_allowed_here';
 
-      const jsonReporter = new JsonReporter(metrics, options, 'test');
+      const jsonReporter = new JsonReporter(measures, options, 'test');
 
       assert.throws(jsonReporter.report);
     });
@@ -43,7 +43,7 @@ describe('JSON reporter', function () {
     it('report status should be zero', function () {
       options.report_path = './zait_report.json';
 
-      const jsonReporter = new JsonReporter(metrics, options, 'test');
+      const jsonReporter = new JsonReporter(measures, options, 'test');
 
       jsonReporter.report();
 
@@ -53,7 +53,7 @@ describe('JSON reporter', function () {
     it('report status code should be 1(non zero code)', function () {
       options.report_path = '/zait_is_not_allowed_here';
 
-      const jsonReporter = new JsonReporter(metrics, options, 'test');
+      const jsonReporter = new JsonReporter(measures, options, 'test');
 
       jsonReporter.report();
 
