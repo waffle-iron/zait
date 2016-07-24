@@ -52,3 +52,13 @@ export function measuresToArrayTable(results, raw = false) {
 
   return table;
 }
+
+export function extendBuiltin(cls) {
+  function ExtendableBuiltin(...args) {
+    cls.apply(this, args);
+  }
+
+  ExtendableBuiltin.prototype = Object.create(cls.prototype);
+
+  return ExtendableBuiltin;
+}
