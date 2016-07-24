@@ -1,6 +1,7 @@
 import { Promise } from 'es6-promise';
+import { extendBuiltin } from './utils';
 
-export class LoadError extends Error {
+export class LoadError extends extendBuiltin(Error) {
 
   /**
    * Ser error message
