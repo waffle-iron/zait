@@ -5,7 +5,7 @@ import { measuresToArrayTable } from './modules/utils';
 import { message } from './modules/cli';
 
 import Parser from './modules/Parser';
-import TimeReceiver from './modules/TimeReceiver';
+import TimeReceiver, { LoadError } from './modules/TimeReceiver';
 import reportersRegister from './modules/reporters/reportersRegister';
 
 const casper = new Casper({
@@ -65,11 +65,16 @@ casper.start().eachThen(commands, res => {
   casper.open(command.url, command.opts);
 
   measuresPromise
+    .catch(e => {
+      if (e instanceof LoadError) {
+        return Promise.resolve(e.measures);
+      }
+
+      message.err(e); // TODO Print stack
+      return Promise.reject(e);
+    })
     .then(collectedMeasures => {
       measures[curMeasureIndex] = collectedMeasures;
-    })
-    .catch(e => {
-      throw e;
     });
 }).run();
 

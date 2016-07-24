@@ -1,5 +1,20 @@
 import { Promise } from 'es6-promise';
 
+export class LoadError extends Error {
+
+  /**
+   * Ser error message
+   *
+   * @param {String} message Error message
+   */
+  constructor(message, measures) {
+    super(message);
+    this.message = message;
+    this.name = 'LoadError';
+    this.measures = measures;
+  }
+}
+
 /**
  *
  * Time receiver class
@@ -20,7 +35,7 @@ class TimeReceiver {
    * @returns {Promise} Promise, that returns received measures
    */
   getLoadTime() {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       const measures = {};
       let startTime;
       let endTime;
@@ -44,7 +59,7 @@ class TimeReceiver {
 
         /* eslint-enable */
 
-        resolve(measures);
+        reject(new Error); // TODO make it like in others handlers
       };
 
       /**
@@ -53,7 +68,7 @@ class TimeReceiver {
        * @inner
        */
       const requestHandler = () => {
-        startTime = new Date().getTime();
+        startTime = new Date().getTime(); // TODO needs refactoring
 
         measures.startTime = startTime;
 
@@ -70,15 +85,17 @@ class TimeReceiver {
         endTime = new Date().getTime();
 
         measures.loadTime = endTime - startTime;
-        if (resource.status !== null) {
-          measures.status = resource.status;
-        } else {
-          measures.status = 'load error';
-        }
 
         this.casper.removeListener('timeout', timeoutHandler);
         this.casper.removeListener('page.resource.received', receiveHandler);
-        resolve(measures);
+
+        if ([2, 3].indexOf(resource.status / 100 | 0) !== -1) {
+          measures.status = resource.status;
+          resolve(measures);
+        } else {
+          measures.status = resource.status | 'load error';
+          reject(new LoadError(`Couldn't load ${resource.url}: ${measures.status}`, measures));
+        }
       };
 
       /**
