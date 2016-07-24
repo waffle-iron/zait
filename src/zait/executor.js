@@ -33,25 +33,6 @@ const measures = [];
 
 casper.options.pageSettings.resourceTimeout = parser.parsedConfig.timeout || 1000;
 
-casper.on('page.resource.requested', (res) => {
-  message.print(`${res.method}: ${res.url}`); // TODO: make info message and trace mode
-});
-
-casper.on('page.resource.received', (res) => {
-  // TODO: make error handlers
-
-  switch (res.status / 100 | 0) {
-    case 2:
-      message.success(`${res.url} was loaded`); // TODO: make info message and trace mode
-      break;
-    case 3:
-      message.print(`Redirect to ${res.redirectURL}`);
-      break;
-    default:
-      message.warn(`Error with ${res.url}`);
-  }
-});
-
 casper.start().eachThen(commands, res => {
   const command = res.data;
 
@@ -62,19 +43,24 @@ casper.start().eachThen(commands, res => {
 
   const measuresPromise = timeReceiver.getLoadTime();
 
+  message.print(`${measures[curMeasureIndex].method}: ${measures[curMeasureIndex].url}`);
+
   casper.open(command.url, command.opts);
 
   measuresPromise
+    .then(collectedMeasures => {
+      message.success(`${measures[curMeasureIndex].url} was loaded`);
+      Object.assign(measures[curMeasureIndex], collectedMeasures);
+    })
     .catch(e => {
       if (e instanceof LoadError) {
-        return Promise.resolve(e.measures);
+        message.warn(e.message);
+
+        Object.assign(measures[curMeasureIndex], e.measures);
+        return;
       }
 
       message.err(e); // TODO print error stack
-      return Promise.reject(e);
-    })
-    .then(collectedMeasures => {
-      Object.assign(measures[curMeasureIndex], collectedMeasures);
     });
 }).run();
 

@@ -1,5 +1,6 @@
 import { Promise } from 'es6-promise';
 import { extendBuiltin } from './utils';
+import { message as logger } from './cli';
 
 export class LoadError extends extendBuiltin(Error) {
 
@@ -87,16 +88,23 @@ class TimeReceiver {
 
         measures.loadTime = endTime - startTime;
 
+        switch (resource.status / 100 | 0) {
+          case 2:
+            measures.status = resource.status;
+            resolve(measures);
+            break;
+          case 3:
+            logger.print(`Redirect to ${resource.redirectURL}`); // TODO maybe needs a trace?
+            return;
+          default:
+            measures.status = resource.status || resource.status !== 0
+              ? 'timeout' : 0;
+            reject(new LoadError(`Couldn't load ${resource.url}.` +
+              `Status: ${measures.status}`, measures));
+        }
+
         this.casper.removeListener('timeout', timeoutHandler);
         this.casper.removeListener('page.resource.received', receiveHandler);
-
-        if ([2, 3].indexOf(resource.status / 100 | 0) !== -1) {
-          measures.status = resource.status;
-          resolve(measures);
-        } else {
-          measures.status = resource.status | 'load error';
-          reject(new LoadError(`Couldn't load ${resource.url}: ${measures.status}`, measures));
-        }
       };
 
       /**
