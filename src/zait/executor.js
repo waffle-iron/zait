@@ -70,11 +70,11 @@ casper.start().eachThen(commands, res => {
         return Promise.resolve(e.measures);
       }
 
-      message.err(e); // TODO Print stack
+      message.err(e); // TODO print error stack
       return Promise.reject(e);
     })
     .then(collectedMeasures => {
-      measures[curMeasureIndex] = collectedMeasures;
+      Object.assign(measures[curMeasureIndex], collectedMeasures);
     });
 }).run();
 
