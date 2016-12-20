@@ -17,7 +17,7 @@ const args = JSON.parse(casper.cli.get(0)); // JSON object of args passed by Pyt
 
 message.logLevel = args.logLevel;
 
-casper.on('error', err => {
+casper.on('error', (err) => {
   if (message.logLevel !== 5) {
     casper.log(err, 'error');
   }
@@ -33,7 +33,7 @@ const measures = [];
 
 casper.options.pageSettings.resourceTimeout = parser.parsedConfig.timeout || 1000;
 
-casper.start().eachThen(commands, res => {
+casper.start().eachThen(commands, (res) => {
   const command = res.data;
 
   const curMeasureIndex = measures.push({
@@ -48,11 +48,11 @@ casper.start().eachThen(commands, res => {
   casper.open(command.url, command.opts);
 
   measuresPromise
-    .then(collectedMeasures => {
+    .then((collectedMeasures) => {
       message.success(`${measures[curMeasureIndex].url} was loaded`);
       Object.assign(measures[curMeasureIndex], collectedMeasures);
     })
-    .catch(e => {
+    .catch((e) => {
       if (e instanceof LoadError) {
         message.warn(e.message);
 

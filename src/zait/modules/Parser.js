@@ -1,6 +1,6 @@
-import commandBuilder from './commandTransformer';
 import yaml from 'js-yaml';
 import typeOf from 'typeof';
+import commandBuilder from './commandTransformer';
 
 /*
  * Parse error class

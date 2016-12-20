@@ -14,11 +14,11 @@ export function measuresToArrayTable(results, raw = false) {
 
   table.push(header);
 
-  results.forEach(row => {
+  results.forEach((row) => {
     const column = [];
 
     for (const colName in row) {
-      if (row.hasOwnProperty(colName)) {
+      if (Object.prototype.hasOwnProperty.call(row, colName)) {
         let value = row[colName];
 
         // TODO needs refactor(maybe)
@@ -29,7 +29,7 @@ export function measuresToArrayTable(results, raw = false) {
               // Check the first number of status code
               if (
                 ['timeout', 'load error'].indexOf(value) === -1 &&
-                [1, 2, 3].indexOf((value / 100) | 0) !== -1
+                [1, 2, 3].indexOf(parseInt(value / 100, 10)) !== -1
               ) {
                 value = chalk.green(value);
               } else {

@@ -61,7 +61,7 @@ class TimeReceiver {
 
         /* eslint-enable */
 
-        reject(new Error); // TODO make it like in others handlers
+        reject(new Error()); // TODO make it like in others handlers
       };
 
       /**
@@ -88,7 +88,7 @@ class TimeReceiver {
 
         measures.loadTime = endTime - startTime;
 
-        switch (resource.status / 100 | 0) {
+        switch (parseInt(resource.status / 100, 10)) {
           case 2:
             measures.status = resource.status;
             resolve(measures);

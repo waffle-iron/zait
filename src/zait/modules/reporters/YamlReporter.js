@@ -1,8 +1,8 @@
 /** @module Reporters */
 
-import Reporter from './Reporter';
 import json2yaml from 'json2yaml';
 import fs from 'fs';
+import Reporter from './Reporter';
 
 /**
  * YAML Reporter class

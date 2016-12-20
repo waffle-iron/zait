@@ -3,6 +3,10 @@ import stripAnsi from 'strip-ansi';
 import mdTable from 'markdown-table';
 import logger from 'loglevel';
 
+// temporary disabled
+
+/* eslint-disable */
+
 /** @namespace */
 export const message = {
 
@@ -81,4 +85,6 @@ export const message = {
     logger.info(mdTable(table, config));
   }
 };
+
+/* eslint-enable */
 

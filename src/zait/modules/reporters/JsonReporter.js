@@ -1,7 +1,7 @@
 /** @module Reporters */
 
-import Reporter from './Reporter';
 import fs from 'fs';
+import Reporter from './Reporter';
 
 /**
  * JSON reporter class

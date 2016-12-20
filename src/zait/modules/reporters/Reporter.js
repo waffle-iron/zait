@@ -19,6 +19,8 @@ class Reporter {
     this._reportFailMsg = 'Fail';
   }
 
+  /* eslint-disable */
+
   /**
    * Report measures method
    * @abstract
@@ -26,6 +28,8 @@ class Reporter {
   report() {
     throw Error('Field is not implemented');
   }
+
+  /* eslint-enable */
 
   /**
    * Returns info string for logging
