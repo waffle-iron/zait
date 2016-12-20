@@ -30,11 +30,16 @@ gulp.task('jsdoc', () => {
 });
 
 gulp.task('test', pipeline => {
-  const isparta = spawn('./test/.isparta', {
-    stdio: 'inherit'
+  const args = ['./node_modules/.bin/mocha'];
+  const nyc = spawn('./node_modules/.bin/nyc', args, {
+    stdio: 'inherit',
+    env: {
+      NODE_ENV: 'test',
+      FORCE_COLOR: 'true'
+    }
   });
 
-  isparta.on('close', code => {
+  nyc.on('close', code => {
     pipeline(code);
   });
 });
