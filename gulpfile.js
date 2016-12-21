@@ -33,10 +33,10 @@ gulp.task('test', pipeline => {
   const args = ['./node_modules/.bin/mocha'];
   const nyc = spawn('./node_modules/.bin/nyc', args, {
     stdio: 'inherit',
-    env: {
+    env: Object.assign(process.env, {
       NODE_ENV: 'test',
       FORCE_COLOR: 'true'
-    }
+    })
   });
 
   nyc.on('close', code => {
