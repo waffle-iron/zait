@@ -57,8 +57,6 @@
     "gulp-jscpd": "0.0.7",
     "gulp-jsdoc3": "^1.0.1",
     "gulp-shell": "^0.5.2",
-    "jshint": "^2.9.2",
-    "jshint-stylish": "^2.1.0",
     "mocha": "^3.2.0",
     "mocha-casperjs": "^0.5.7",
     "nyc": "^10.0.0"
