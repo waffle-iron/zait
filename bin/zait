@@ -10,6 +10,7 @@ def main():
 
     ap.add_argument('--log-level', dest='logLevel', type=str.lower, help='Set log level', default='info', choices=['trace', 'debug', 'info', 'warn', 'error', 'silent'])
     ap.add_argument('--config-path', '-c', dest='configPath', default='./zait.json', help='Path to zait config')
+    ap.add_argument('--dev-mode', '-d', dest='devMode', help='Enabe dev mode(phantomjs) logs', action='store_true')
 
     args = vars(ap.parse_args())
 
@@ -18,7 +19,7 @@ def main():
     casper_bin = path.join(script_path, '../node_modules/.bin/casperjs')
     executor_path = path.join(script_path, "../lib/zait/executor.js")
 
-    execvp(casper_bin, ['--verbose', executor_path, zait_args_json])
+    execvp(casper_bin, ['--verbose', '--debug={}'.format(str(args['devMode']).lower()), executor_path, zait_args_json])
 
 
 if __name__ == '__main__':
