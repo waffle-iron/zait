@@ -9,7 +9,6 @@ import TimeReceiver, { LoadError } from './modules/TimeReceiver';
 import reportersRegister from './modules/reporters/reportersRegister';
 
 const casper = new Casper({
-  verbose: true,
   exitOnError: true
 });
 
