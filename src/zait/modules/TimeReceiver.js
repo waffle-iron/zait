@@ -47,13 +47,11 @@ class TimeReceiver {
        *
        * @inner
        */
-      const timeoutHandler = () => { // TODO maybe timeout handler is no needed
+      const timeoutHandler = (resource) => {
         endTime = new Date().getTime();
 
         measures.loadTime = endTime - startTime;
-        measures.status = 'timeout';
-
-        this.casper.removeListener('timeout', timeoutHandler);
+        measures.status = 599;
 
         /* eslint-disable */
 
@@ -61,7 +59,12 @@ class TimeReceiver {
 
         /* eslint-enable */
 
-        reject(new Error()); // TODO make it like in others handlers
+        reject(
+          new LoadError(
+            `Couldn't load ${resource.url}. Status: ${measures.status}(timeout)`,
+            measures
+          )
+        );
       };
 
       /**
@@ -70,6 +73,8 @@ class TimeReceiver {
        * @inner
        */
       const requestHandler = () => {
+        this.casper.page.onResourceTimeout = timeoutHandler;
+
         startTime = new Date().getTime(); // TODO needs refactoring
 
         measures.startTime = startTime;
@@ -97,13 +102,16 @@ class TimeReceiver {
             logger.print(`Redirect to ${resource.redirectURL}`); // TODO maybe needs a trace?
             return;
           default:
-            measures.status = resource.status || resource.status !== 0
-              ? 'timeout' : 0;
-            reject(new LoadError(`Couldn't load ${resource.url}.` +
-              `Status: ${measures.status}`, measures));
+            measures.status = resource.status;
+
+            reject(
+              new LoadError(
+                `Couldn't load ${resource.url}. Status: ${measures.status}`,
+                measures
+              )
+            );
         }
 
-        this.casper.removeListener('timeout', timeoutHandler);
         this.casper.removeListener('page.resource.received', receiveHandler);
       };
 
@@ -111,7 +119,6 @@ class TimeReceiver {
        * @todo Add jsdoc for events events
        */
       this.casper.on('page.resource.requested', requestHandler);
-      this.casper.on('stepTimeout', timeoutHandler);
       this.casper.on('page.resource.received', receiveHandler);
     });
   }
