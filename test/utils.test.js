@@ -1,4 +1,6 @@
 import {measuresToArrayTable} from '../src/zait/modules/utils';
+
+import fs from 'fs';
 import {assert} from 'chai';
 import chalk from 'phantomjs-chalk';
 
@@ -51,6 +53,30 @@ describe('Utils',  function () {
 
     it('should returns non colorized row when raw argument is true', function () {
       assert.strictEqual(String(measuresToArrayTable(measures, true)[2][3]).indexOf(chalk.styles.red.open), -1);
+    });
+  });
+
+  describe('readConfig', () => {
+    const testFile = {
+      yml: './zait.yml',
+      json: './zait.json',
+      test: './test',
+    };
+
+    before(() => {
+      testFile
+        .entries
+        .forEach(([content, path]) => {
+          fs.writeFileSync(content, path);
+        });
+    });
+
+    after(() => {
+      testFile
+        .entries
+        .forEach(([content, path]) => {
+          fs.writeFileSync(path);
+        })
     });
   });
 });

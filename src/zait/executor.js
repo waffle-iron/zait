@@ -1,7 +1,5 @@
 import { Casper } from 'casper';
-import fs from 'fs';
-
-import { measuresToArrayTable } from './modules/utils';
+import { measuresToArrayTable, readConfig } from './modules/utils';
 import { message } from './modules/cli';
 
 import Parser from './modules/Parser';
@@ -24,7 +22,7 @@ casper.on('error', (err) => {
   casper.exit(1);
 });
 
-const conf = fs.read(args.configPath);
+const conf = readConfig(args.configPath);
 const parser = new Parser(conf);
 const commands = parser.parsedCommands;
 const timeReceiver = new TimeReceiver(casper);

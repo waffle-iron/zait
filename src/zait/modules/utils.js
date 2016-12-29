@@ -1,5 +1,6 @@
 /** @module utlis */
 import chalk from 'phantomjs-chalk';
+import fs from 'fs';
 
 /**
  * Transform measures to array table
@@ -51,6 +52,20 @@ export function measuresToArrayTable(results, raw = false) {
   });
 
   return table;
+}
+
+export function readConfig(confPath) {
+  if (confPath) {
+    return fs.read(confPath);
+  }
+
+  if (fs.exists('./zait.yml')) {
+    return fs.read('./zait.yml');
+  } else if (fs.exists('./zait.json')) {
+    return fs.read('./zait.json');
+  }
+
+  throw new Error('Unable to find config file. Please specify config path manually');
 }
 
 export function extendBuiltin(cls) {
